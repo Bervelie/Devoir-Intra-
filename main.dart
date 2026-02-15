@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pageAccueil.dart';
+import 'splashScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         brightness: Brightness.dark,
       ),
-      home: const MyHomePage(title: 'MovieFinder App'),
+      home: Paran1(),
       debugShowCheckedModeBanner: false,
     );
   }
