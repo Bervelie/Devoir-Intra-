@@ -9,13 +9,9 @@ class LoginEkran extends StatefulWidget {
   @override
   State<LoginEkran> createState() => _LoginEkranState();
 }
-
-// Fake Database
-class FakeDatabase {
-  static Map<String, String> users = {
-    "bervelie@gmail.com": "12345678"
-  };
-}
+//lis pou kenbe email ak mot de passe
+  final  users = <String, String>{
+    "bervelie@gmail.com": "12345678"};
 
 class _LoginEkranState extends State<LoginEkran> {
 
@@ -23,92 +19,78 @@ class _LoginEkranState extends State<LoginEkran> {
   final TextEditingController emailField = TextEditingController();
   final TextEditingController passField = TextEditingController();
 
-  void login() {
+  void antre() {
     if (_formKey.currentState!.validate()) {
-      String email = emailField.text.trim();
-      String password = passField.text.trim();
+      String email = emailField.text;
+      String password = passField.text;
 // kondisyon pou verifye si se login itilizate a chwazi si mail ak pass li okay si yo nn lis nou an
-      if (FakeDatabase.users.containsKey(email) &&
-          FakeDatabase.users[email] == password) {
-
+      if (users.containsKey(email) &&
+          users[email] == password) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => const MyHomePage(title: 'MovieFinder App')),
         );
-
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Email oubyn password ou rantre a pa bon")),
-        );
-      }
-    }
-  }
+        );}} }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("KONEKTE")),
-      body: Padding(
+      appBar: AppBar(title: const Text("CONNEXION")),
+      body:SafeArea(child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Form(
+      child : Form(
           key: _formKey,
           child: Column(
             children: [
-
               TextFormField(
                 controller: emailField,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   labelText: "Email",
-                  border: OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Chan sa obligatwa";
-                  }
-                  if (!RegExp(r'^[a-zA-Z0-9._%-]+@gmail\.com$').hasMatch(value)) {
+                    return "Ce champ est obligatoire";
+                     }
+                     if (!RegExp(r'^[a-zA-Z0-9._%-]+@gmail\.com$').hasMatch(value)) {
+                    return "Email ou pa bon retape l";
+                  }if (!RegExp(r'^[a-zA-Z0-9._%-]+@gmail\.com$').hasMatch(value)) {
                     return "Email ou pa bon retape l";
                   }
                   return null;
-                },
-              ),
-
+                }, ),
               const SizedBox(height: 20),
-
               TextFormField(
                 controller: passField,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: "Password",
-                  border: OutlineInputBorder(),
+                 obscureText: true,
+                decoration: InputDecoration(
+                  labelText: "Mot de Passe",
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Chan sa obligatwa";
+                    return "Ce champ est obligatoire";
                   }
                   return null;
-                },
-              ),
-
-              const SizedBox(height: 20),
-
+                }, ),
+              const SizedBox(height: 50),
               ElevatedButton(
-                onPressed: login,
-                child: const Text("Konekte"),
+                onPressed: antre,
+                child: const Text("Connecter"),
               ),
-
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const SignupPage()),
-                  );
-                },
-                child: const Text("Anrejistre"),
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (cont) => const Enregistrement()),
+                  );},
+                child: const Text("Pas de compte/Inscrire"),
               ),
             ],
           ),
         ),
+      ),
       ),
     );
   }

@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       title: 'Movie App!!',
       theme: ThemeData(
         colorSchemeSeed: Colors.indigo,
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         brightness: Brightness.dark,
       ),
-      home: Paran1(),
+      home: Paran2(),
       debugShowCheckedModeBanner: false,
     );
   }

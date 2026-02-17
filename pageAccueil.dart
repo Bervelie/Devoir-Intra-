@@ -25,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         backgroundColor: Colors.blue
       ),
-      body:Column(
+      body:SafeArea(child: Column(
         children: [
           // pati fim tandans nan ppage akey(horizontal)
           Padding(
@@ -33,6 +33,9 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 18),
+                Text('Chargement'),
                 Text(
                   'Tendances',
                   style: TextStyle(
@@ -146,6 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ],
+      ),
       ),
     bottomNavigationBar: _BottomNav(0),
    );
