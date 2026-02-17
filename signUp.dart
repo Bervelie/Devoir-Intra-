@@ -4,31 +4,29 @@ import 'LoginPage.dart';
 
 
 //ekran pou anrejistre (Sign up)
-class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
+class Enregistrement extends StatefulWidget {
+  const Enregistrement({super.key});
 
   @override
-  State<SignupPage> createState() => _SignupPageState();
+  State<Enregistrement> createState() => _enregistrementState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _enregistrementState extends State<Enregistrement> {
 
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final _kleAnr = GlobalKey<FormState>();
+  final TextEditingController imelTape = TextEditingController();
+  final TextEditingController passTape = TextEditingController();
+  final TextEditingController confPasTape = TextEditingController();
 
   void signup() {
-    if (_formKey.currentState!.validate()) {
-      String email = emailController.text.trim();
-      String password = passwordController.text.trim();
+    if (_kleAnr.currentState!.validate()) {
+      String email = imelTape.text;
+      String password = passTape.text;
 
-      FakeDatabase.users[email] = password;
-
+      users[email] = password;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Kont ou kreye")),
-      );
-
+          const SnackBar(content: Text("Compte cree")),
+        );
       Navigator.pop(context);
     }
   }
@@ -36,64 +34,57 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("ANREJISTRE")),
-      body: Padding(
+      appBar: AppBar(title: const Text("Inscription")),
+      body: SafeArea(child: Padding(
         padding: const EdgeInsets.all(20),
         child: Form(
-          key: _formKey,
+          key: _kleAnr,
           child: Column(
             children: [
-
               TextFormField(
-                controller: emailController,
+                controller: imelTape,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
-                  labelText: "Email",
-                  border: OutlineInputBorder(),
+                  labelText: "Email"
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Antre imel ou";
+                    return "Remplis le champ email";
                   }
                   if (!RegExp(r'^[a-zA-Z0-9._%-]+@gmail\.com$').hasMatch(value)) {
-                    return "imel la dwe gen fom @gmail.com";
+                    return "Email ou pa bon retape l";
                   }
                   return null;
+
                 },
               ),
 
               const SizedBox(height: 20),
 
               TextFormField(
-                controller: passwordController,
-                obscureText: true,
+                controller: passTape,
+                 obscureText: true,
                 decoration: const InputDecoration(
                   labelText: "Password",
-                  border: OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Antre password";
-                  }
-                  if (value.length < 8) {
-                    return "Modpas la dwe gen 8 karakte";
+                    return "Remplis le champ password";
                   }
                   return null;
                 },
               ),
 
               const SizedBox(height: 20),
-
               TextFormField(
-                controller: confirmPasswordController,
+                controller: confPasTape,
                 obscureText: true,
                 decoration: const InputDecoration(
-                  labelText: "Konfime Modpas",
-                  border: OutlineInputBorder(),
+                  labelText: "Confirme Mot de Passe",
                 ),
                 validator: (value) {
-                  if (value != passwordController.text) {
-                    return "Password pa bon";
+                  if (value != passTape.text) {
+                    return "Mot de Passe incorrect";
                   }
                   return null;
                 },
@@ -103,12 +94,15 @@ class _SignupPageState extends State<SignupPage> {
 
               ElevatedButton(
                 onPressed: signup,
-                child: const Text("Anrejistre"),
+                child: const Text("Creer"),
+        
+
               ),
-            ],
-          ),
-        ),
-      ),
+          ],
+         ),
+       ), 
+     ), 
+     ),
     );
   }
 }
